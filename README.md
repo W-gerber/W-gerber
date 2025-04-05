@@ -59,19 +59,39 @@ Here's a snapshot of the programming languages I use, updated dynamically to ref
 
 ## 🔗 Connect With Me
 
-I’m always excited to network and collaborate with fellow developers, tech enthusiasts, and potential employers. Reach out to me via:
 
-- **LinkedIn:** [Willem Gerber](https://www.linkedin.com/in/willem-gerber-954562329/)  
-- **GitHub:** [W-gerber](https://github.com/W-gerber)
+Let's build something awesome together! 🚀
 
-Feel free to drop a message or connect for exciting opportunities! 💬
+<p align="left">
+  <a href="https://www.linkedin.com/in/willem-gerber-954562329/">
+    <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+  </a>
+  
+  <a href="https://github.com/W-gerber">
+    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
+  </a>
+  
+  <a href="mailto:wgerber04@icloud.com"> 
+    <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
+  </a>
+</p>
+
 
 ---
 
 ## 💭 Personal Thoughts
 
-> "Code is like humor. When you have to explain it, it’s bad." – Cory House
+##🎮 When I'm not coding, you'll find me...
+- Optimizing my snack stack like it's production infrastructure 🍕⚡  
+- Converting oxygen to CO₂ at alarming rates (a.k.a. breathing) 🌬️💨
+- Debating tabs vs spaces (tabs win, fight me) 🤺
 
-Every project is a learning experience. I’m committed to not only delivering functional solutions but also crafting code that’s elegant, efficient, and sustainable. Thank you for visiting my profile. If you’re looking for a passionate developer who values quality and innovation, let’s connect! 🙌
+##✨ Coding Philosophy
+> "**Debugging** /dēˈbəɡiNG/ *noun*: Being the detective in a crime movie where you're also the murderer." 🔍
+
+> "**Caffeine** /ˈkafēn/ *noun*: The primary compiler for late-night code sessions." ☕⚡
+
+**Fun Fact:** This README was coded with 73% less bugs than the average tutorial project! 🐞➗
+
 
 ---
