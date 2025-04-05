@@ -78,12 +78,12 @@ Let's build something awesome together! 🚀
 
 ## 💭 Personal Thoughts
 
-##🎮 When I'm not coding, you'll find me...
+🎮 When I'm not coding, you'll find me...
 - Optimizing my snack stack like it's production infrastructure 🍕⚡  
 - Converting oxygen to CO₂ at alarming rates (a.k.a. breathing) 🌬️💨
 - Debating tabs vs spaces (tabs win, fight me) 🤺
 
-##✨ Coding Philosophy
+✨ Coding Philosophy
 > "**Debugging** /dēˈbəɡiNG/ *noun*: Being the detective in a crime movie where you're also the murderer." 🔍
 
 > "**Caffeine** /ˈkafēn/ *noun*: The primary compiler for late-night code sessions." ☕⚡
