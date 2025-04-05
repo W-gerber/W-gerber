@@ -1,8 +1,5 @@
 # Willem Gerber  
 *Software Engineer in Training | Lifelong Learner*  
-
-![Banner](https://raw.githubusercontent.com/W-gerber/W-gerber/main/assets/gojo-satoru-gojo.gif) 
-
 ---
 
 ## Table of Contents   
