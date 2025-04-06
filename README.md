@@ -1,32 +1,3 @@
-# Willem Gerber  
-*Software Engineer in Training | Lifelong Learner*  
----
-
-## Table of Contents   
-1. [🎓 Education & Tracks](#education--tracks)   
-2. [📊 Language Stats](#language-stats)  
-3. [🛠️ Tech & Tools](#tech--tools)  
-4. [🔗 Connect With Me](#connect-with-me)  
-5. [💭 Personal Thoughts](#personal-thoughts)
-
----
-
-## 🎓 Education & Tracks
-
-### 💼 **Occupational Certificate: Software Engineer (Level 1 of 2)**  
-- **Institution:** Ctu Potchefsroom  
-- **Duration:** 01 February 2025 – 30 November 2025  
-- **Focus:** Mastering industry-standard software engineering practices to build a robust career foundation.  
-
-### 💻 **Software Development (SDD-SD)**  
-- **Institution:** Ctu Potchefsroom  
-- **Duration:** 01 February 2024 – 30 April 2025  
-- **Focus:** Developing scalable, maintainable software solutions with hands-on project experience.  
-
-### 🖥️ **Programming Foundation (PF)**  
-- **Institution:** Ctu Potchefsroom  
-- **Duration:** 01 February 2023 – 31 January 2024  
-- **Focus:** Building a strong base in programming fundamentals and problem-solving.
 
 ---
 
@@ -62,10 +33,6 @@ Let's build something awesome together! 🚀
 <p align="left">
   <a href="https://www.linkedin.com/in/willem-gerber-954562329/">
     <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
-  </a>
-  
-  <a href="https://github.com/W-gerber">
-    <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
   </a>
   
   <a href="mailto:wgerber04@icloud.com"> 
