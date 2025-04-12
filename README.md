@@ -3,8 +3,6 @@
 
 ## 📊 Language Stats
 
-Here's a snapshot of the programming languages I use, updated dynamically to reflect my contributions:
-
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=gitdocify&bg_color=0d1117)](https://github.com/W-gerber)
 
 
@@ -21,7 +19,6 @@ Here's a snapshot of the programming languages I use, updated dynamically to ref
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="Docker" width="40" height="40"/>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/azure/azure-original.svg" alt="Azure" width="40" height="40"/>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/github/github-original.svg" alt="GitHub" width="40" height="40"/>
 </p>
 
 ---
