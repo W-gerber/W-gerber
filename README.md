@@ -2,40 +2,15 @@
 
 ## 🚀 Tech & Tools | 📊 Language Stats
 
-<div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
-  
-  <!-- Tech & Tools -->
-  <div style="flex: 1;">
-    <h3>🛠️ Tech & Tools</h3>
-    <p align="left">
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg" alt="Spring" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML5" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="Docker" width="40" height="40"/>
-      <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/azure/azure-original.svg" alt="Azure" width="40" height="40"/>
-    </p>
-  </div>
-  
-  <!-- Language Stats -->
-  <div style="flex: 1;">
-    <h3>📊 Language Stats</h3>
-    <p align="center">
-      <a href="https://github.com/W-gerber">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=default&bg_color=ffffff&text_color=000000"/>
-      </a>
-    </p>
-  </div>
-
-</div>
+| 🛠️ Tech & Tools | 📊 Language Stats |
+|-----------------|-------------------|
+| <p align="left"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="Java" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg" alt="Spring" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg" alt="React" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML5" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg" alt="Docker" width="40" height="40"/> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/azure/azure-original.svg" alt="Azure" width="40" height="40"/></p> | <p align="center"><a href="https://github.com/W-gerber"><img src="https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=default&bg_color=ffffff&text_color=000000"/></a></p> |
 
 ---
 
 ## 💭 Personal Thoughts
 
-🎮 When I'm not coding, you'll find me...
+🎮 When I'm not coding, you'll find me...  
 - Optimizing my snack stack like it's production infrastructure 🍕⚡  
 - Converting oxygen to CO₂ at alarming rates (a.k.a. breathing) 🌬️💨  
 - Debating tabs vs spaces (tabs win, fight me) 🤺  
