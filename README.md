@@ -7,26 +7,12 @@
 
 ---
 
-    <!-- Language Stats -->
-    <td width="50%" valign="top" align="center">
-      <h3>📊 Language Stats</h3>
-      <a href="https://github.com/W-gerber">
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=default&bg_color=ffffff&text_color=000000" alt="Top Langs"/>
-      </a>
-    </td>
-  </tr>
-</table>
-
----
-
 ## 💭 Personal Thoughts
 
 🎮 When I'm not coding, you'll find me...  
 - Optimizing my snack stack like it's production infrastructure 🍕⚡  
 - Converting oxygen to CO₂ at alarming rates (a.k.a. breathing) 🌬️💨  
 - Debating tabs vs spaces (tabs win, fight me) 🤺  
-
----
 
 ## ✨ Coding Philosophy
 
