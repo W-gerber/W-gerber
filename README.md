@@ -3,7 +3,7 @@
 
 ## 📊 Language Stats
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=gitdocify&bg_color=0d1117)](https://github.com/W-gerber)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=W-gerber&layout=compact&theme=gitdocify&bg_color=000000)](https://github.com/W-gerber)
 
 
 ---
