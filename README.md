@@ -1,5 +1,3 @@
----
-
 ## 🚀 Tech & Tools | 📊 Language Stats
 
 | 🛠️ Tech & Tools | 📊 Language Stats |
