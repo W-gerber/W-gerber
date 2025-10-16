@@ -291,17 +291,17 @@ def stars_counter(data):
     return total_stars
 
 
-def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data):
+def svg_overwrite(filename, age_data, commit_data, languages_data, repo_data, contrib_data, pr_data, loc_data):
     """
-    Parse SVG files and update elements with Willem's age, commits, stars, repositories, and lines written
+    Parse SVG files and update elements with Willem's age, commits, languages, repositories, pull requests, and lines written
     """
     tree = etree.parse(filename)
     root = tree.getroot()
     justify_format(root, 'commit_data', commit_data, 22)
-    justify_format(root, 'star_data', star_data, 14)
+    justify_format(root, 'languages_data', languages_data, 6)
     justify_format(root, 'repo_data', repo_data, 6)
     justify_format(root, 'contrib_data', contrib_data)
-    justify_format(root, 'follower_data', follower_data, 10)
+    justify_format(root, 'pr_data', pr_data, 7)
     justify_format(root, 'loc_data', loc_data[2], 9)
     justify_format(root, 'loc_add', loc_data[0])
     justify_format(root, 'loc_del', loc_data[1], 7)
@@ -383,6 +383,69 @@ def follower_getter(username):
     return int(request.json()['data']['user']['followers']['totalCount'])
 
 
+def languages_getter(owner_affiliation, cursor=None, languages=set()):
+    """
+    Returns the number of unique programming languages used across all repositories
+    """
+    query_count('graph_repos_stars')
+    query = '''
+    query ($owner_affiliation: [RepositoryAffiliation], $login: String!, $cursor: String) {
+        user(login: $login) {
+            repositories(first: 100, after: $cursor, ownerAffiliations: $owner_affiliation) {
+                edges {
+                    node {
+                        ... on Repository {
+                            languages(first: 10) {
+                                edges {
+                                    node {
+                                        name
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                }
+            }
+        }
+    }'''
+    variables = {'owner_affiliation': owner_affiliation, 'login': USER_NAME, 'cursor': cursor}
+    request = simple_request(languages_getter.__name__, query, variables)
+    
+    # Collect all unique languages
+    for edge in request.json()['data']['user']['repositories']['edges']:
+        for lang in edge['node']['languages']['edges']:
+            languages.add(lang['node']['name'])
+    
+    # If there are more pages, recursively fetch them
+    if request.json()['data']['user']['repositories']['pageInfo']['hasNextPage']:
+        return languages_getter(owner_affiliation, 
+                              request.json()['data']['user']['repositories']['pageInfo']['endCursor'], 
+                              languages)
+    
+    return len(languages)
+
+
+def pull_requests_getter(username):
+    """
+    Returns the total number of pull requests created by the user
+    """
+    query_count('follower_getter')
+    query = '''
+    query($login: String!){
+        user(login: $login) {
+            pullRequests {
+                totalCount
+            }
+        }
+    }'''
+    request = simple_request(pull_requests_getter.__name__, query, {'login': username})
+    return int(request.json()['data']['user']['pullRequests']['totalCount'])
+
+
 def query_count(funct_id):
     """
     Counts how many times the GitHub GraphQL API is called
@@ -436,24 +499,24 @@ if __name__ == '__main__':
     # Get Willem's commit count
     commit_data, commit_time = perf_counter(commit_counter, 3)
     
-    # Get repository and star statistics
-    star_data, star_time = perf_counter(graph_repos_stars, 'stars', ['OWNER'])
+    # Get repository and languages statistics
+    languages_data, languages_time = perf_counter(languages_getter, ['OWNER'])
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
     
-    # Get follower count
-    follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
+    # Get pull requests count
+    pr_data, pr_time = perf_counter(pull_requests_getter, USER_NAME)
 
     # Format the LOC data for display
     for index in range(len(total_loc)-1): 
         total_loc[index] = '{:,}'.format(total_loc[index])
 
     # Update both SVG files with Willem's data
-    svg_overwrite('willem_light.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1])
-    svg_overwrite('willem_dark.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1])
+    svg_overwrite('willem_light.svg', age_data, commit_data, languages_data, repo_data, contrib_data, pr_data, total_loc[:-1])
+    svg_overwrite('willem_dark.svg', age_data, commit_data, languages_data, repo_data, contrib_data, pr_data, total_loc[:-1])
 
     # Display total execution time
-    total_time = user_time + age_time + loc_time + commit_time + star_time + repo_time + contrib_time + follower_time
+    total_time = user_time + age_time + loc_time + commit_time + languages_time + repo_time + contrib_time + pr_time
     print('\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F',
         '{:<21}'.format('Total function time:'), '{:>11}'.format('%.4f' % total_time),
         ' s \033[E\033[E\033[E\033[E\033[E\033[E\033[E\033[E\033[E', sep='')
