@@ -6,6 +6,9 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch: # Allows manual trigger from Actions tab
 
+permissions:
+  contents: write
+
 jobs:
   update-profile:
     runs-on: ubuntu-latest
