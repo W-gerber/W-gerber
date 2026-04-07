@@ -39,5 +39,15 @@ jobs:
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add willem_light.svg willem_dark.svg willem_cache/
+        python -c "
+import datetime, re
+now = datetime.datetime.now(datetime.timezone.utc)
+timestamp = now.strftime('%B %d, %Y at %H:%M UTC')
+with open('README.md', 'r') as f:
+    content = f.read()
+content = re.sub(r'<!-- LAST_UPDATED -->.*?<!-- /LAST_UPDATED -->', '<!-- LAST_UPDATED -->' + timestamp + '<!-- /LAST_UPDATED -->', content)
+with open('README.md', 'w') as f:
+    f.write(content)
+"
+        git add willem_light.svg willem_dark.svg willem_cache/ README.md
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update GitHub profile stats [skip ci]" && git push)
