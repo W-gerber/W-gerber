@@ -6,4 +6,6 @@
   <img alt="Willem's GitHub Profile" src="https://raw.githubusercontent.com/W-gerber/W-gerber/main/willem_light.svg">
 </picture>
 
+⏰ **Last updated:** <!-- LAST_UPDATED -->Never<!-- /LAST_UPDATED -->
+
 </div>
