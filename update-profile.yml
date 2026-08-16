@@ -1,0 +1,41 @@
+name: Willem's Profile Update
+
+on:
+  schedule:
+    # Runs daily at 12:00 AM UTC (adjust as needed)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  update-profile:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r willem_requirements.txt
+        
+    - name: Update Profile SVGs
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+      run: |
+        python willem_profile.py
+        
+    - name: Commit and Push Changes
+      run: |
+        git config --local user.email "wgerber04@icloud.com"
+        git config --local user.name "Willem Gerber"
+        git add willem_light.svg willem_dark.svg willem_cache/
+        git diff --staged --quiet || git commit -m "🔄 Auto-update Willem's GitHub profile stats - $(date)"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
