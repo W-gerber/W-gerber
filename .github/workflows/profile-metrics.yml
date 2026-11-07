@@ -1,0 +1,51 @@
+name: Update profile metrics
+
+on:
+  push:
+    paths:
+      - .github/workflows/profile-metrics.yml
+  schedule:
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-metrics-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check metrics token
+        env:
+          METRICS_TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: |
+          if [ -z "$METRICS_TOKEN" ] || [[ "$METRICS_TOKEN" == github_pat_* ]]; then
+            echo "::error::Create a classic personal access token and save it as the METRICS_TOKEN repository secret. Fine-grained tokens are not supported by this version of lowlighter/metrics."
+            exit 1
+          fi
+      - name: Generate profile metrics
+        uses: lowlighter/metrics@65836723097537a54cd8eb90f61839426b4266b6 # latest
+        with:
+          filename: profile-metrics.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: W-gerber
+          committer_branch: ${{ github.ref_name }}
+          config_display: columns
+          config_timezone: Africa/Johannesburg
+          config_order: base.header, base.activity+community, base.repositories, habits, topics, isocalendar, languages
+          base: header, community, repositories
+          plugin_lines: yes
+          plugin_habits: yes
+          plugin_habits_facts: no
+          plugin_habits_charts: yes
+          plugin_topics: yes
+          plugin_topics_mode: icons
+          plugin_topics_limit: 0
+          plugin_isocalendar: yes
+          plugin_isocalendar_duration: half-year
+          plugin_languages: yes
+          plugin_languages_sections: most-used
