@@ -1,0 +1,88 @@
+name: Update profile metrics
+
+on:
+  push:
+    paths:
+      - .github/workflows/profile-metrics.yml
+      - .github/metrics/**
+  schedule:
+    - cron: '30 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-metrics-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    env:
+      INPUT_USER: W-gerber
+      INPUT_OUTPUT_ACTION: none
+      INPUT_BASE: header, community, repositories
+      INPUT_CONFIG_TIMEZONE: Africa/Johannesburg
+      INPUT_CONFIG_ORDER: base.header, base.activity+community, base.repositories, habits, topics, isocalendar, languages
+      INPUT_EXTRAS_CSS: "svg.columns .items-wrapper { column-count: 2 !important; }"
+      INPUT_PLUGINS_ERRORS_FATAL: 'yes'
+      INPUT_PLUGIN_LINES: 'yes'
+      INPUT_PLUGIN_HABITS: 'yes'
+      INPUT_PLUGIN_HABITS_FACTS: 'no'
+      INPUT_PLUGIN_HABITS_CHARTS: 'yes'
+      INPUT_PLUGIN_TOPICS: 'yes'
+      INPUT_PLUGIN_TOPICS_MODE: icons
+      INPUT_PLUGIN_TOPICS_LIMIT: '0'
+      INPUT_PLUGIN_ISOCALENDAR: 'yes'
+      INPUT_PLUGIN_ISOCALENDAR_DURATION: half-year
+      INPUT_PLUGIN_LANGUAGES: 'yes'
+      INPUT_PLUGIN_LANGUAGES_SECTIONS: most-used
+    steps:
+      - name: Check metrics token
+        env:
+          INPUT_TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: |
+          if [ -z "$INPUT_TOKEN" ] || [[ "$INPUT_TOKEN" == github_pat_* ]]; then
+            echo "::error::Create a classic personal access token and save it as the METRICS_TOKEN repository secret. Fine-grained tokens are not supported by this version of lowlighter/metrics."
+            exit 1
+          fi
+      - uses: actions/checkout@v4
+      - name: Build metrics renderer
+        run: docker build --tag profile-metrics --file .github/metrics/Dockerfile .github/metrics
+      - name: Generate desktop and mobile metrics
+        env:
+          INPUT_TOKEN: ${{ secrets.METRICS_TOKEN }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/metrics-renders"
+          inputs=(
+            INPUT_TOKEN INPUT_USER INPUT_OUTPUT_ACTION INPUT_BASE INPUT_CONFIG_TIMEZONE
+            INPUT_CONFIG_ORDER INPUT_EXTRAS_CSS INPUT_PLUGINS_ERRORS_FATAL INPUT_PLUGIN_LINES
+            INPUT_PLUGIN_HABITS INPUT_PLUGIN_HABITS_FACTS INPUT_PLUGIN_HABITS_CHARTS
+            INPUT_PLUGIN_TOPICS INPUT_PLUGIN_TOPICS_MODE INPUT_PLUGIN_TOPICS_LIMIT
+            INPUT_PLUGIN_ISOCALENDAR INPUT_PLUGIN_ISOCALENDAR_DURATION INPUT_PLUGIN_LANGUAGES
+            INPUT_PLUGIN_LANGUAGES_SECTIONS
+          )
+          docker_env=()
+          for input in "${inputs[@]}"; do docker_env+=(--env "$input"); done
+
+          docker run --rm --volume "$RUNNER_TEMP/metrics-renders:/renders" \
+            "${docker_env[@]}" --env INPUT_FILENAME=profile-metrics.svg \
+            --env INPUT_CONFIG_DISPLAY=columns profile-metrics
+          docker run --rm --volume "$RUNNER_TEMP/metrics-renders:/renders" \
+            "${docker_env[@]}" --env INPUT_FILENAME=profile-metrics-mobile.svg \
+            --env INPUT_CONFIG_DISPLAY=regular profile-metrics
+
+          sudo cp "$RUNNER_TEMP/metrics-renders/profile-metrics.svg" profile-metrics.svg
+          sudo cp "$RUNNER_TEMP/metrics-renders/profile-metrics-mobile.svg" profile-metrics-mobile.svg
+          sudo chown "$(id -u):$(id -g)" profile-metrics.svg profile-metrics-mobile.svg
+          python .github/metrics/fix-desktop-svg.py profile-metrics.svg
+      - name: Commit updated metrics
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add profile-metrics.svg profile-metrics-mobile.svg
+          if ! git diff --cached --quiet; then
+            git commit -m "Update profile metrics [skip ci]" -m "Co-authored-by: Copilot App <223556219+Copilot@users.noreply.github.com>"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
