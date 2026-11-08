@@ -93,6 +93,13 @@ patch("/metrics/source/plugins/community/fortune/index.mjs", [
   ],
 ]);
 
+patch("/metrics/source/templates/classic/partials/fortune.ejs", [
+  [
+    '<b style="color: <%= plugins.fortune.color %>">',
+    '<b style="color: #24292f">',
+  ],
+]);
+
 patch("/metrics/source/plugins/languages/index.mjs", [
   [
     "    //Results\n    return languages",
