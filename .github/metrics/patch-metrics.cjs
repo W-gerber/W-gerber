@@ -64,6 +64,10 @@ patch("/metrics/source/plugins/habits/index.mjs", [
   ["if (patches.length) {", "if (patches.length && limit) {"],
 ]);
 
+patch("/metrics/source/plugins/base/queries/repositories.graphql", [
+  ["languages(first: 8)", "languages(first: 100)"],
+]);
+
 patch("/metrics/source/plugins/languages/index.mjs", [
   [
     "    //Results\n    return languages",
@@ -72,6 +76,7 @@ patch("/metrics/source/plugins/languages/index.mjs", [
       "TypeScript": "typescript", "HTML": "html5", "CSS": "css3",
       "Lua": "lua", "JavaScript": "javascript", "Astro": "astro",
       "C++": "cplusplus", "C#": "csharp", "Python": "python",
+      "CMake": "cmake", "Dockerfile": "docker", "PowerShell": "powershell",
     }
     for (const language of [...languages.favorites, ...languages.recent]) {
       const icon = icons[language.name]
@@ -87,6 +92,10 @@ patch("/metrics/source/plugins/languages/index.mjs", [
 ]);
 
 patch("/metrics/source/templates/classic/partials/languages.ejs", [
+  [
+    '<% if (plugins.languages) { %>\n  <section>',
+    '<% if (plugins.languages) { %>\n  <section class="languages-heading">',
+  ],
   [
     `          <div class="field center horizontal-wrap fill-width">
             <% for (const {name, value, color} of languages) { %>

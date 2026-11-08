@@ -26,8 +26,8 @@ jobs:
       INPUT_BASE: header, community, repositories
       INPUT_REPOSITORIES_FORKS: 'yes'
       INPUT_CONFIG_TIMEZONE: Africa/Johannesburg
-      INPUT_CONFIG_ORDER: base.header, base.activity+community, base.repositories, habits, isocalendar, languages
-      INPUT_EXTRAS_CSS: "svg.columns .items-wrapper { column-count: 2 !important; } .language-icons { display: flex; flex-wrap: wrap; gap: 10px; padding: 8px 5px 0; align-items: center; } .language-icons img { width: 32px; height: 32px; object-fit: contain; }"
+      INPUT_CONFIG_ORDER: base.header, base.activity+community, base.repositories, languages, isocalendar, habits
+      INPUT_EXTRAS_CSS: "svg.columns .items-wrapper { column-count: 2 !important; } svg.columns .languages-heading { break-before: column; } .language-icons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 8px 5px 0; width: 100%; box-sizing: border-box; align-items: center; } .language-icons img { width: 32px; height: 32px; object-fit: contain; }"
       INPUT_PLUGINS_ERRORS_FATAL: 'yes'
       INPUT_RETRIES: '1'
       INPUT_RETRIES_DELAY: '0'
@@ -40,6 +40,7 @@ jobs:
       INPUT_PLUGIN_ISOCALENDAR_DURATION: half-year
       INPUT_PLUGIN_LANGUAGES: 'yes'
       INPUT_PLUGIN_LANGUAGES_SECTIONS: most-used
+      INPUT_PLUGIN_LANGUAGES_LIMIT: '0'
     steps:
       - name: Check metrics token
         env:
@@ -63,7 +64,7 @@ jobs:
             INPUT_PLUGIN_HABITS INPUT_PLUGIN_HABITS_FACTS INPUT_PLUGIN_HABITS_CHARTS
             INPUT_PLUGIN_HABITS_LANGUAGES_LIMIT
             INPUT_PLUGIN_ISOCALENDAR INPUT_PLUGIN_ISOCALENDAR_DURATION INPUT_PLUGIN_LANGUAGES
-            INPUT_PLUGIN_LANGUAGES_SECTIONS
+            INPUT_PLUGIN_LANGUAGES_SECTIONS INPUT_PLUGIN_LANGUAGES_LIMIT
           )
           docker_env=()
           for input in "${inputs[@]}"; do docker_env+=(--env "$input"); done
