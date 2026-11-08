@@ -12,7 +12,55 @@ function patch(path, changes) {
 }
 
 patch("/metrics/source/plugins/habits/index.mjs", [
-  [".flatMap(({payload}) => payload.commits)", ".flatMap(({payload}) => payload.commits ?? [])"],
+  [
+    `    const patches = [
+      ...await Promise.allSettled(
+        commits
+          .flatMap(({payload}) => payload.commits)
+          .filter(({author}) => data.shared["commits.authoring"].filter(authoring => author?.login?.toLocaleLowerCase().includes(authoring) || author?.email?.toLocaleLowerCase().includes(authoring) || author?.name?.toLocaleLowerCase().includes(authoring)).length)
+          .map(async commit => (await rest.request(commit)).data.files),
+      ),
+    ]
+      .filter(({status}) => status === "fulfilled")
+      .map(({value}) => value)
+      .flatMap(files => files.map(file => ({name: imports.paths.basename(file.filename), patch: file.patch ?? ""})))
+      .map(({name, patch}) => ({name, patch: patch.split("\\n").filter(line => /^[+]/.test(line)).map(line => line.substring(1)).join("\\n")}))`,
+    `    const isAuthor = author => data.shared["commits.authoring"].some(authoring =>
+      [author?.login, author?.email, author?.name].some(value => value?.toLocaleLowerCase().includes(authoring.toLocaleLowerCase())))
+    const requests = commits.slice(0, 25).flatMap(({payload, repo}) => {
+      if (Array.isArray(payload.commits))
+        return payload.commits.filter(({author}) => isAuthor(author)).map(async commit => (await rest.request(commit)).data.files ?? [])
+      if (!payload.head)
+        return []
+      const [owner, name] = repo.name.split("/")
+      return [(async () => {
+        const {data: commit} = await rest.repos.getCommit({owner, repo: name, ref: payload.head})
+        const author = {...commit.commit?.author, login: commit.author?.login}
+        return isAuthor(author) ? commit.files ?? [] : []
+      })()]
+    })
+    const results = await Promise.allSettled(requests)
+    const failed = results.filter(({status}) => status === "rejected").length
+    if (failed)
+      console.warn(\`Could not load \${failed} recent commit details; coding-style facts may be incomplete.\`)
+    const patches = results
+      .filter(({status}) => status === "fulfilled")
+      .flatMap(({value}) => value.map(file => ({name: imports.paths.basename(file.filename), patch: file.patch ?? ""})))
+      .map(({name, patch}) => ({name, patch: patch.split("\\n").filter(line => /^[+]/.test(line)).map(line => line.substring(1)).join("\\n")}))`,
+  ],
+  [
+    `      patches
+        .map(({patch}) => patch.match(/((?:\\t)|(?:[ ]{2})) /gm) ?? [])
+        .forEach(indent => habits.indents[/^\\t/.test(indent) ? "tabs" : "spaces"]++)`,
+    `      for (const {patch} of patches) {
+        for (const line of patch.split("\\n")) {
+          if (/^\\t+\\S/.test(line))
+            habits.indents.tabs++
+          else if (/^ {2,}\\S/.test(line))
+            habits.indents.spaces++
+        }
+      }`,
+  ],
   ["if (patches.length) {", "if (patches.length && limit) {"],
 ]);
 
