@@ -68,6 +68,31 @@ patch("/metrics/source/plugins/base/queries/repositories.graphql", [
   ["languages(first: 8)", "languages(first: 100)"],
 ]);
 
+patch("/metrics/source/plugins/community/fortune/index.mjs", [
+  [
+    "    const x = Math.random()",
+    `    const seed = process.env.PROFILE_FORTUNE_SEED
+    if (!seed)
+      throw new Error("PROFILE_FORTUNE_SEED is required")
+    let hash = 2166136261
+    for (const char of seed)
+      hash = Math.imul(hash ^ char.charCodeAt(0), 16777619)
+    const x = (hash >>> 0) / 2 ** 32`,
+  ],
+  [
+    `      if (x <= r) {
+        fortune = fortunes[i]
+        break
+      }
+      r += fortunes[i].chance`,
+    `      r += fortunes[i].chance
+      if (x < r) {
+        fortune = fortunes[i]
+        break
+      }`,
+  ],
+]);
+
 patch("/metrics/source/plugins/languages/index.mjs", [
   [
     "    //Results\n    return languages",

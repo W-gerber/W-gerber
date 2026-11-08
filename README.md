@@ -12,7 +12,8 @@ Repository totals include owned forks, including their stars, forks, and languag
 Coding habits are based on recent push events; code-style facts sample up to
 25 push heads. The language section shows all detected languages from owned
 repositories. Icons are from Devicon; languages without a bundled icon are
-shown by name.
+shown by name. Fortune is refreshed with the metrics and is the same on both
+desktop and mobile.
 The workflow needs a classic GitHub personal access token in the METRICS_TOKEN
 repository secret. A token with the repo scope can expose private activity in
 the public graphic and grants broad read/write access to repositories.
